@@ -19,8 +19,7 @@ impl StdinWrapper {
 
 impl Read for StdinWrapper {
     fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
-        self.stdin.lock();
-        self.stdin.read(buf)
+        self.stdin.lock().read(buf)
     }
 }
 
@@ -39,8 +38,7 @@ impl StdoutWrapper {
 
 impl Write for StdoutWrapper {
     fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
-        self.stdout.lock();
-        self.stdout.write(buf)
+        self.stdout.lock().write(buf)
     }
 
     fn flush(&mut self) -> std::io::Result<()> {

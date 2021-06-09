@@ -9,7 +9,6 @@ pub struct State {
     pub cells: Cells,
     pub command_ptr: usize,
     pub cell_ptr: usize,
-    pub remembered: Option<u8>,
 }
 
 /// Result of running
@@ -50,7 +49,6 @@ impl Interpreter {
             cells: Cells::new(self.settings.array_size),
             command_ptr: 0,
             cell_ptr: 0,
-            remembered: None,
         }
     }
 
@@ -98,8 +96,8 @@ impl Interpreter {
             },
             Command::Read => {
                 let result = match self.settings.input_mode {
-                    InputMode::Ascii => self.read_ascii(state),
-                    InputMode::Digit => self.read_digit(state),
+                    InputMode::Ascii => self.read_ascii(),
+                    InputMode::Digit => self.read_digit(),
                 };
 
                 match result {
@@ -140,12 +138,13 @@ impl Interpreter {
                     None => return RunResult::IndexOutOfBound(state.cell_ptr),
                 };
 
-                let result = self.writer.write(&buf);
-
-                match result {
+                match self.writer.write(&buf) {
                     Err(_) => return RunResult::WriteFailed,
                     Ok(0) => return RunResult::WriteFailed,
-                    Ok(_) => {}
+                    Ok(_) => match self.writer.flush() {
+                        Err(_) => return RunResult::WriteFailed,
+                        Ok(_) => {},
+                    }
                 }
             }
         }
@@ -153,55 +152,70 @@ impl Interpreter {
         RunResult::None
     }
 
-    fn read_ascii(&mut self, state: &mut State) -> ReadResult {
-        if let Some(ch) = state.remembered {
-            state.remembered = None;
-            // No need to check '\n' (ReadResult::Newline) because it is always handled by the code below and
-            //   is not remembered.
-            return ReadResult::Success(ch);
-        }
+    fn read_ascii(&mut self) -> ReadResult {
+        return match self.settings.newline_mode {
+            NewlineMode::CRLF => self.read_ascii_crlf(),
+            NewlineMode::LF => self.read_ascii_lf(),
+        };
+    }
 
+    fn read_ascii_crlf(&mut self) -> ReadResult {
         let mut buf = [0];
+
         match self.reader.read(&mut buf) {
             Err(_) => return ReadResult::ReadFailed,
             Ok(0) => return ReadResult::None,
-            Ok(_) => match self.settings.newline_mode {
-                NewlineMode::CRLF => {
-                    if buf[0] == '\r' as u8 {
-                        match self.reader.read(&mut buf) {
-                            Err(_) => return ReadResult::ReadFailed,
-                            Ok(0) => return ReadResult::Success('\r' as u8),
-                            Ok(_) => {
-                                if buf[0] == '\n' as u8 {
-                                    return match self.settings.ignore_newline {
-                                        true => ReadResult::None,
-                                        false => ReadResult::Newline,
-                                    };
-                                } else {
-                                    state.remembered = Some(buf[0]);
-                                    return ReadResult::Success('\r' as u8);
-                                }
-                            }
-                        }
-                    } else {
-                        return ReadResult::Success(buf[0] as u8);
-                    }
+            Ok(_) => {
+                if buf[0] != '\r' as u8 {
+                    return ReadResult::Success(buf[0]);
                 }
-                NewlineMode::LF => {
-                    if buf[0] == '\n' as u8 {
-                        return match self.settings.ignore_newline {
-                            true => ReadResult::None,
-                            false => ReadResult::Newline,
-                        };
-                    } else {
-                        return ReadResult::Success(buf[0]);
-                    }
+            }
+        }
+
+        match self.reader.read(&mut buf) {
+            Err(_) => return ReadResult::ReadFailed,
+            Ok(0) => return ReadResult::Success('\r' as u8),
+            Ok(_) => {
+                if buf[0] != '\n' as u8 {
+                    return ReadResult::Success(buf[0]);
+                } else if !self.settings.ignore_newline {
+                    return ReadResult::Newline;
                 }
-            },
+            }
+        }
+
+        match self.reader.read(&mut buf) {
+            Err(_) => return ReadResult::ReadFailed,
+            Ok(0) => return ReadResult::ReadFailed,
+            Ok(_) => return ReadResult::Success(buf[0]),
         }
     }
 
-    fn read_digit(&mut self, _state: &mut State) -> ReadResult {
+    fn read_ascii_lf(&mut self) -> ReadResult {
+        let mut buf = [0];
+
+        match self.reader.read(&mut buf) {
+            Err(_) => return ReadResult::ReadFailed,
+            Ok(0) => return ReadResult::None,
+            Ok(_) => {
+                if buf[0] != '\n' as u8 {
+                    return ReadResult::Success(buf[0]);
+                } else if !self.settings.ignore_newline {
+                    return ReadResult::Newline;
+                }
+            }
+        }
+
+        match self.reader.read(&mut buf) {
+            Err(_) => return ReadResult::ReadFailed,
+            Ok(0) => return ReadResult::ReadFailed,
+            Ok(_) => {
+                return ReadResult::Success(buf[0]);
+            }
+        }
+    }
+
+    fn read_digit(&mut self) -> ReadResult {
         let mut result = 0;
         let mut last_is_cr = false;
         loop {
