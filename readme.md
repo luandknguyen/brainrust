@@ -87,6 +87,40 @@ This program print out whatever the user put in.
 
 **run**: ```brainfuck_rs "examples/cat.txt"```
 
+### 4. Multiply
+
+This program read 2 number and multiply them.
+
+*examples/multiply.txt*
+```
+,>,< input numbers at cell #1 #2
+[
+ > go to cell #2
+ [
+   ->+>+<< move data to cell #3 #4
+ ]
+ >> go to cell #4
+ [
+  -<<+>> move data to cell #2
+ ]
+ <<< go to cell #1
+ - decrement cell #1
+]
+```
+
+**run**: ```brainfuck_rs "examples/multiply.txt" --input_mode=digit --size_array=10 --final_array```
+
+**input**:
+```
+3
+4
+```
+
+**output**:
+```
+Final array: [0, 4, 12, 0, 0, 0, 0, 0, 0, 0]
+```
+
 ## 📝 Notes
 
 - When cell pointer is at the first cell, '<' will wrap around if `--wrapping` flag is set.
