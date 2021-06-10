@@ -1,6 +1,7 @@
 use std::fs::File;
 use std::io::prelude::*;
 
+use crate::error::*;
 use crate::compiler::*;
 use crate::interpreter::*;
 use crate::settings::*;

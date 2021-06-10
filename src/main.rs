@@ -1,20 +1,9 @@
-mod cells;
-mod compiler;
-mod interpreter;
-mod interpreter_builder;
-mod program;
-mod settings;
-mod stdio_wrapper;
-
 use std::fs::File;
 use std::io::prelude::*;
 
-use clap::{App, Arg, ArgMatches};
+use brainfuck_rs::*;
 
-use crate::compiler::*;
-use crate::interpreter::*;
-use crate::interpreter_builder::*;
-use crate::settings::*;
+use clap::{App, Arg, ArgMatches};
 
 /// Error while parsing command-line arguments
 enum ParseError {

@@ -1,6 +1,7 @@
 use std::io::prelude::*;
 
 use crate::cells::*;
+use crate::error::*;
 use crate::program::*;
 use crate::settings::*;
 
@@ -9,20 +10,6 @@ pub struct State {
     pub cells: Cells,
     pub command_ptr: usize,
     pub cell_ptr: usize,
-}
-
-/// Result of running
-#[derive(Debug)]
-pub enum RunResult {
-    None,
-    Halted,
-    /// Index out of state's bound
-    ///
-    /// `usize` is the indexing location
-    IndexOutOfBound(usize),
-    ReadFailed,
-    WriteFailed,
-    ParseNumError,
 }
 
 /// Read result
@@ -143,8 +130,8 @@ impl Interpreter {
                     Ok(0) => return RunResult::WriteFailed,
                     Ok(_) => match self.writer.flush() {
                         Err(_) => return RunResult::WriteFailed,
-                        Ok(_) => {},
-                    }
+                        Ok(_) => {}
+                    },
                 }
             }
         }
