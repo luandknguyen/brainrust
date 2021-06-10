@@ -2,7 +2,7 @@
 
 **brainfuck_rs** is a Brainfuck interpreter written in Rust. It focuses on features over speed.
 
-## Features
+## ✨ Features
 
 - **Dynamic** or **Static** array size.
 - Cell pointer wrapping (with `--wrapping` flag).
@@ -37,11 +37,11 @@
         --newline_mode <NEWLINE_MODE>   Select newline mode: CRLF or LF. Default: CRLF
 ```
 
-## Examples
+## 🔖 Examples
 
 *Notes: the examples in `examples` folder use CRLF.*
 
-### Hello World
+### 1. Hello World
 
 This program prints `Hello World!` and the final array state.
 
@@ -59,7 +59,7 @@ Hello World!
 Final array: [0, 0, 72, 100, 87, 33, 10, 0, 0, 0]
 ```
 
-### Hello World (shortest)
+### 2. Hello World (shortest)
 
 This program also prints `Hello World!` but is shorter than the previous program and requires wrapping.
 
@@ -76,7 +76,18 @@ Hello, World!
 Final array: [172, 108, 44, 33, 87, 0, 72, 0, 153, 100]
 ```
 
-## Notes
+### 3. Cat 
+
+This program print out whatever the user put in.
+
+*examples/cat.txt*
+```
+,[.,]
+```
+
+**run**: ```brainfuck_rs "examples/cat.txt"```
+
+## 📝 Notes
 
 - When cell pointer is at the first cell, '<' will wrap around if `--wrapping` flag is set.
 - When cell pointer is at the final cell, '>' will wrap around if `--wrapping` flag is set, unless `--dynamic_size` flag is also set.
