@@ -38,6 +38,12 @@
         --newline_mode <NEWLINE_MODE>   Select newline mode: CRLF or LF. Default: CRLF
 ```
 
+## 📝 Notes
+
+- Newline character defaults to MS-DOS convension (i.e. CRLF). Use `--newline_mode=LF` to change to Linux convension.
+- When cell pointer is at the first cell, '<' will wrap around if `--wrapping` flag is set.
+- When cell pointer is at the final cell, '>' will wrap around if `--wrapping` flag is set, unless `--dynamic_size` flag is also set.
+
 ## 🔖 Examples
 
 *Notes: the examples in `examples` folder use CRLF.*
@@ -121,12 +127,6 @@ This program read 2 number and multiply them.
 ```
 Final array: [0, 4, 12, 0, 0, 0, 0, 0, 0, 0]
 ```
-
-## 📝 Notes
-
-- Newline character defaults to MS-DOS convension (i.e. CRLF). Use `--newline_mode=LF` to change to Linux convension.
-- When cell pointer is at the first cell, '<' will wrap around if `--wrapping` flag is set.
-- When cell pointer is at the final cell, '>' will wrap around if `--wrapping` flag is set, unless `--dynamic_size` flag is also set.
 
 ## 🔰 Commit Emoji Guide
 
