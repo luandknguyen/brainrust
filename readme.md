@@ -54,7 +54,7 @@ This program prints `Hello World!` and the final array state.
 
 **run**: ```brainfuck_rs "examples/hello_world.txt" --array_size=10 --final_array```
 
-![hello_world.txt](examples/hello_world.png)
+![hello_world](examples/hello_world.png)
 
 ### 2. Hello World (shortest)
 
@@ -62,7 +62,7 @@ This program also prints `Hello World!` but is shorter than the previous program
 
 **run**: ```brainfuck_rs "examples/hello_world_shortest.txt" --array_size=10 --final_array --wrapping```
 
-![hello_world.txt](examples/hello_world_shortest.png)
+![hello_world_shortest](examples/hello_world_shortest.png)
 
 ### 3. Cat 
 
