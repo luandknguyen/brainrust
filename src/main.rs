@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::prelude::*;
 
-use brainfuck_rs::*;
+use brainrust::*;
 
 use clap::{App, Arg, ArgMatches};
 

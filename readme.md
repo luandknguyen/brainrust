@@ -1,10 +1,10 @@
-# brainfuck_rs
+# brainrust
 
-**brainfuck_rs** is a Brainfuck interpreter written in Rust. It focuses on features over speed.
+**brainrust** is a Brainfuck interpreter written in Rust. It focuses on features over speed.
 
 ## ✨ Features
 
-- **Dynamic** or **Static** array size.
+- Dynamic or static array size.
 - Set input from and output to a file instead of command-line.
 - Cell pointer wrapping (with `--wrapping` flag).
 - Specify behavior when read EOF:
@@ -52,12 +52,12 @@
 
 This program prints `Hello World!` and the final array state.
 
-*examples/hello_world.txt*
+**run**: ```brainfuck_rs "examples/hello_world.txt" --array_size=10 --final_array```
+
+*file: examples/hello_world.txt*
 ```
 ++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.
 ```
-
-**run**: ```brainfuck_rs "examples/hello_world.txt" --array_size=10 --final_array```
 
 **output**:
 ```
@@ -70,12 +70,12 @@ Final array: [0, 0, 72, 100, 87, 33, 10, 0, 0, 0]
 
 This program also prints `Hello World!` but is shorter than the previous program and requires wrapping.
 
-*examples/hello_world_shortest.txt*
+**run**: ```brainfuck_rs "examples/hello_world.txt" --array_size=10 --final_array --wrapping```
+
+*file: examples/hello_world_shortest.txt*
 ```
 +[-->-[>>+>-----<<]<--<---]>-.>>>+.>>..+++[.>]<<<<.+++.------.<<-.>>>>+.
 ```
-
-**run**: ```brainfuck_rs "examples/hello_world.txt" --array_size=10 --final_array --wrapping```
 
 **output**:
 ```
@@ -87,12 +87,12 @@ Final array: [172, 108, 44, 33, 87, 0, 72, 0, 153, 100]
 
 This program print out whatever the user put in.
 
-*examples/cat.txt*
+**run**: ```brainfuck_rs "examples/cat.txt"```
+
+*file: examples/cat.txt*
 ```
 ,[.,]
 ```
-
-**run**: ```brainfuck_rs "examples/cat.txt"```
 
 ### 4. Multiply
 

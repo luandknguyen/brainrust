@@ -1,21 +1,21 @@
 [package]
-name = "brainfuck_rs"
+name = "brainrust"
 version = "0.1.0"
 authors = ["Luan Nguyen <luandknguyen@gmail.com>"]
 license = "MIT"
-repository = "https://github.com/luandknguyen/brainfuck_rs"
-homepage = "https://github.com/luandknguyen/brainfuck_rs"
+repository = "https://github.com/luandknguyen/brainrust"
+homepage = "https://github.com/luandknguyen/brainrust"
 description = "An interpreter written in Rust. It focuses on features over speed."
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
-name = "brainfuck_rs"
+name = "brainrust"
 path = "src/lib.rs"
 
 [[bin]]
-name = "brainfuck_rs"
+name = "brainrust"
 path = "src/main.rs"
 
 [dependencies]
