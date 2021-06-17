@@ -54,34 +54,15 @@ This program prints `Hello World!` and the final array state.
 
 **run**: ```brainfuck_rs "examples/hello_world.txt" --array_size=10 --final_array```
 
-*file: examples/hello_world.txt*
-```
-++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.
-```
-
-**output**:
-```
-Hello World!
-
-Final array: [0, 0, 72, 100, 87, 33, 10, 0, 0, 0]
-```
+![hello_world.txt](examples/hello_world.png)
 
 ### 2. Hello World (shortest)
 
 This program also prints `Hello World!` but is shorter than the previous program and requires wrapping.
 
-**run**: ```brainfuck_rs "examples/hello_world.txt" --array_size=10 --final_array --wrapping```
+**run**: ```brainfuck_rs "examples/hello_world_shortest.txt" --array_size=10 --final_array --wrapping```
 
-*file: examples/hello_world_shortest.txt*
-```
-+[-->-[>>+>-----<<]<--<---]>-.>>>+.>>..+++[.>]<<<<.+++.------.<<-.>>>>+.
-```
-
-**output**:
-```
-Hello, World!
-Final array: [172, 108, 44, 33, 87, 0, 72, 0, 153, 100]
-```
+![hello_world.txt](examples/hello_world_shortest.png)
 
 ### 3. Cat 
 
@@ -96,37 +77,11 @@ This program print out whatever the user put in.
 
 ### 4. Multiply
 
-This program read 2 number and multiply them.
+This program read 2 number then multiply them and store the result in the third cell.
 
-*examples/multiply.txt*
-```
-,>,< input numbers at cell #1 #2
-[
- > go to cell #2
- [
-   ->+>+<< move data to cell #3 #4
- ]
- >> go to cell #4
- [
-  -<<+>> move data to cell #2
- ]
- <<< go to cell #1
- - decrement cell #1
-]
-```
+**run**: ```brainfuck_rs "examples/multiply.txt" --input_mode=digit --array_size=10 --final_array```
 
-**run**: ```brainfuck_rs "examples/multiply.txt" --input_mode=digit --size_array=10 --final_array```
-
-**input**:
-```
-3
-4
-```
-
-**output**:
-```
-Final array: [0, 4, 12, 0, 0, 0, 0, 0, 0, 0]
-```
+![multiply](examples/multiply.png)
 
 ## 🔰 Commit Emoji Guide
 
