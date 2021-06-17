@@ -41,8 +41,8 @@
 ## 📝 Notes
 
 - Newline character defaults to MS-DOS convension (i.e. CRLF). Use `--newline_mode=LF` to change to Linux convension.
-- When cell pointer is at the first cell, '<' will wrap around if `--wrapping` flag is set.
-- When cell pointer is at the final cell, '>' will wrap around if `--wrapping` flag is set, unless `--dynamic_size` flag is also set.
+- '<' will wrap around if `--wrapping` flag is set.
+- '>' will wrap around if `--wrapping` flag is set, unless `--dynamic_size` flag is also set.
 
 ## 🔖 Examples
 
